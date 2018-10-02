@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <import resource="loggers.xml"/>
+
+
 
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -17,16 +24,17 @@
         <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
     </bean>
 
-    <bean id="client" class="com.yet.spring.core.beans.Client"  p:greeting="${greeting}">
-        <constructor-arg index="0" value="${id}" />
+    <bean id="client" class="com.yet.spring.core.beans.Client" p:greeting="${greeting}">
+        <constructor-arg index="0" value="${id}"/>
         <constructor-arg value="${name}"/>
     </bean>
 
-    <bean id="eventLogger" class="com.yet.spring.core.loggers.ConsoleEventLogger" />
+    <bean id="eventLogger" class="com.yet.spring.core.loggers.ConsoleEventLogger"/>
 
     <bean id="app" class="com.yet.spring.core.App">
         <constructor-arg ref="client"/>
-        <constructor-arg value="#{T(com.yet.spring.core.beans.Event).isDay(8, 17) ? cacheFileEventLogger : consoleEventLogger}" />
+        <constructor-arg
+                value="#{T(com.yet.spring.core.beans.Event).isDay(8, 17) ? cacheFileEventLogger : consoleEventLogger}"/>
         <constructor-arg ref="loggerMap"/>
         <property name="startupMessage" value="{'Hello user' +
         (systemProperties['os.name'].contains('Windows) ? systemEnvironment['USERNAME'] : systemEnvironment['USER']) +
@@ -39,10 +47,9 @@
     </util:map>
 
 
-
     <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateTimeInstance"/>
 
-    <bean id="fileEventLogger" class="com.yet.spring.core.loggers.FileEventLogger" init-method="init" >
+    <bean id="fileEventLogger" class="com.yet.spring.core.loggers.FileEventLogger" init-method="init">
         <constructor-arg value="target/events_log.txt"/>
     </bean>
 
@@ -54,7 +61,7 @@
     <bean id="monitor" class="com.yet.spring.core.util.Monitor"/>
     <bean id="awared" class="com.yet.spring.core.util.AwareBean" init-method="init"/>
 
-    <bean id="event" class="com.yet.spring.core.beans.Event" scope="prototype" >
+    <bean id="event" class="com.yet.spring.core.beans.Event" scope="prototype">
         <constructor-arg value="#{new java.util.Date()}"/>
         <constructor-arg value="#{T(java.text.DateFormat).getDateInstance()}"/>
 
