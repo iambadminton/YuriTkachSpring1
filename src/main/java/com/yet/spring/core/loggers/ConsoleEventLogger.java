@@ -5,7 +5,7 @@ import com.yet.spring.core.beans.Event;
 /**
  * Created by Sanya on 18.08.2018.
  */
-public class ConsoleEventLogger implements EventLogger {
+public class ConsoleEventLogger extends AbstractLogger {
     //@Override
     public void logEvent(Event event) {
         System.out.println(event.toString());

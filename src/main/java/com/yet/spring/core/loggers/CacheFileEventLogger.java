@@ -8,11 +8,11 @@ import java.util.List;
 /**
  * Created by Sanya on 19.08.2018.
  */
-public class CachFileEventLogger extends FileEventLogger {
+public class CacheFileEventLogger extends FileEventLogger {
     int cacheSize;
     List<Event> cache;
 
-    public CachFileEventLogger(String filename, int cacheSize) {
+    public CacheFileEventLogger(String filename, int cacheSize) {
         super(filename);
         this.cacheSize = cacheSize;
         this.cache = new ArrayList<Event>(cacheSize);

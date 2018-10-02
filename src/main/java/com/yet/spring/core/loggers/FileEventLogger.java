@@ -4,13 +4,12 @@ import com.yet.spring.core.beans.Event;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
  * Created by Sanya on 19.08.2018.
  */
-public class FileEventLogger implements EventLogger {
+public class FileEventLogger extends AbstractLogger {
     private File file;
     private String filename;
 
@@ -18,13 +17,16 @@ public class FileEventLogger implements EventLogger {
         this.filename = filename;
     }
 
+    @Override
     public void logEvent(Event event) {
         try {
-            FileUtils.writeStringToFile(file, event.toString(), true);
+            FileUtils.writeStringToFile(file, event.toString() + "\n", true);
         }
         catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 
     public void init() throws IOException {
